@@ -34,20 +34,23 @@ const specialSearch = (req, res, next) => {
 //Function that gets artist's Info
 const artistInfo = (req, res, next) => {
 
-const request = req.body;
-let code = '';
-(!code || code !== 'C0') ? code = 'US' : code = request.valid_for[0];
-let order = '';
-(!order || order !== 'popularity') ?order = 'followers' : order = request.order_by;
-const ids = request.ids;
-let result = {artists: ''}
-const promises = [];
+    const request = req.body;
+    let code = '';
+    (!code || code !== 'C0') ? code = 'US' : code = request.valid_for[0];
+    let order = '';
+    (!order || order !== 'popularity') ?order = 'followers' : order = request.order_by;
+    if (request.ids === undefined) {
+	return res.send({error: "Send data properly"})
+    }
+   const ids = request.ids;
+   let result = {artists: ''}
+   const promises = [];
 
-if(ids.length > 5) {
-  return res.send({'Error':"Ids' list should no be greater than 5"})
-}
+   if(ids.length > 5) {
+     return res.send({'Error':"Ids' list should no be greater than 5"})
+   }
 
-ids.forEach(val => {
+  ids.forEach(val => {
   const promiseFunctionArtist = new Promise(resolve => {
 
     getArtistInfo(val).then(data => {
