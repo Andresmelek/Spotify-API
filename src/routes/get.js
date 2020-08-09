@@ -104,7 +104,7 @@ res.send(result)
 }
 
 
-
+//Function that sorts an array of objects by key value
 const sortBy = (objects, order) => {
   if (order === 'popularity'){
     return objects.sort((a, b) =>  parseFloat(b.popularity) - parseFloat(a.popularity));
